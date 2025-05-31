@@ -15,36 +15,29 @@ export const UserProvider = ({ children }) => {
   }, [pathname]);
 
   const verifyUser = async () => {
-    if (!pathname.includes('/User')) {
-      setLoading(false); // Skip check if not on /User path
-      return;
-    }
+  try {
+    const authResponse = await fetch('/api/auth/isAuth');
+    const authData = await authResponse.json();
 
-    try {
-      const authResponse = await fetch('/api/auth/isAuth');
-      const authData = await authResponse.json();
+    if (authResponse.ok && authData === 'verified') {
+      setUser(authData);
 
-      if (authResponse.ok && authData === 'verified') {
-        setUser(authData);
-
+      // Only check verified status if on /User path
+      if (pathname.includes('/User')) {
         const verifiedResponse = await fetch('/api/auth/getVerified');
-        if (verifiedResponse.ok) {
-          setVerified(true);
-        } else {
-          setVerified(false);
-        }
-      } else {
-        setUser(null);
-        setVerified(null);
+        setVerified(verifiedResponse.ok);
       }
-    } catch (error) {
+    } else {
       setUser(null);
       setVerified(null);
-    } finally {
-      setLoading(false);
     }
-  };
-
+  } catch (error) {
+    setUser(null);
+    setVerified(null);
+  } finally {
+    setLoading(false);
+  }
+};
   const updateUserVerificationStatus = async () => {
     try {
       const verifiedResponse = await fetch('/api/auth/getVerified');

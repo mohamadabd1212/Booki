@@ -44,7 +44,7 @@ export default function Login() {
       },
       body: JSON.stringify({ token }),
     });
-        router.refresh();
+        await router.refresh();
         await setUserContext({});
       } else {
         setResponseMessage(data.message || "Invalid email or password.");

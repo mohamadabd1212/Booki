@@ -3,7 +3,7 @@ import { cookies } from 'next/headers';
 
 // Export GET handler
 export async function GET(req) {
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
   const token = cookieStore.get('token');
 
   if (!token) {

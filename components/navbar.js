@@ -27,9 +27,10 @@ export default function Navbar() {
   const handleLogout = async () => {
     try {
       await fetch(`/api/auth/logout`);
+      router.push("/un/login"); 
       setUserContext(null);  // Clear user context
       setIsLoggedIn(false);  // Update local state for UI
-      router.push("/un/login");  // Redirect to login page
+       // Redirect to login page
     } catch (error) {
       console.error("Logout failed:", error);
     }
