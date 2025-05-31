@@ -44,7 +44,7 @@ export default function Login() {
       },
       body: JSON.stringify({ token }),
     });
-        await router.refresh();
+        router.push('/User/dashboard');
         await setUserContext({});
       } else {
         setResponseMessage(data.message || "Invalid email or password.");
