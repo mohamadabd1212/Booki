@@ -11,32 +11,18 @@ export default function VerifyEmail() {
 
   const handleOtpSubmit = async () => {
     try {
-      const emaila = await fetch("/api/auth/getEmail");
-      const {email} = await emaila.json();
+
       // API call to verify the email
-      const verificationRes = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/check/verifyEmailValidation`,
+      const verificationRes = await fetch(`/api/auth/verifyEmail`,
         {
-          method: "POST", // Assuming it's a GET request
+          method: "GET", // Assuming it's a GET request
           credentials: "include",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({
-            email,
-          }),
         }
       );
-      const data = await verificationRes.json();
       if (verificationRes.ok) {
-        const token = data.token;
-        await fetch('/api/set-token', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ token }),
-    });
         router.push("/User/dashboard");
       } else {
         window.alert("email already Verified");

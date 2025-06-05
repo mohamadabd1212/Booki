@@ -16,27 +16,18 @@ export default function ForgotPassword() {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/change/ResetPasswordRequest`,
-        {
-          method: "POST",
-          credentials: "include",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email }),
-        }
-      );
-      const data= await response.json();
+      const response = await fetch('/api/forgot-password', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }),
+        
+      });
       if (response.ok) {
-        const token=data.token;
-        await fetch('/api/set-otpToken', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ token }),
-    });
         router.push("/un/otpValidatePassword");
-      } else {
+      }
+      else {
         const data = await response.json();
         setErrorMsg(data.message || "An error occurred. Please try again.");
       }

@@ -24,7 +24,7 @@ export default function Login() {
     setLoading(true);
 
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/login`, {
+      const response = await fetch(`/api/login`, {
         method: "POST",
         credentials: "include",
         headers: {
@@ -36,17 +36,10 @@ export default function Login() {
       const data = await response.json();
 
       if (response.ok) {
-        const token=data.token;
-      await fetch('/api/set-token', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ token }),
-    });
         router.push('/User/dashboard');
         await setUserContext({});
-      } else {
+    }
+       else {
         setResponseMessage(data.message || "Invalid email or password.");
       }
     } catch (error) {

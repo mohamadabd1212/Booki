@@ -12,37 +12,16 @@ export default function ValidateOtBeforePassword() {
     try {
       setLoading(true);
 
-      // Step 1: Fetch the email after successful OTP validation
-      const emailRes = await fetch("/api/getEmail");
-      if (!emailRes.ok) throw new Error("Unable to fetch email");
-      const { email } = await emailRes.json();
-
-      // Step 2: Validate the password reset request with the email only
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/change/ValidateResetPasswordRequest`,
-        {
-          method: "POST",
-          credentials: "include",
+        const response =await fetch('/api/forgot-password-validate', {
+          method: 'GET',
           headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email,
-          }),
+            'Content-Type': 'application/json',
+          }
+        });
+        if (response.ok) {
+          router.push("/un/resetPassword");
         }
-      );
-      const data= await response.json();
-      if (response.ok) {
-        const token=data.token;
-        await fetch('/api/set-resetToken', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ token }),
-    });
-        router.push("/un/resetPassword");
-      } else {
+       else {
         const result = await response.json();
         setError(result.message || "Something went wrong");
       }
