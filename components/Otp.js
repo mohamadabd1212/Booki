@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
 
 export default function OtpInput({ onSubmit }) {
+  
   const [otp, setOtp] = useState(new Array(6).fill(""));
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -12,9 +13,6 @@ export default function OtpInput({ onSubmit }) {
   const pathname = usePathname();
   const router = useRouter();
 
-  // Decide endpoint based on path
-  const getEmailEndpoint = () =>
-    pathname.includes("/User") ? "/api/auth/getEmail" : "/api/getEmail";
 
   const handleChange = (element, index) => {
     if (isNaN(element.value)) return;
@@ -36,19 +34,13 @@ export default function OtpInput({ onSubmit }) {
     try {
       setLoading(true);
 
-      const emailResponse = await fetch(getEmailEndpoint());
-      if (!emailResponse.ok)
-        router.replace("/un/login");
-      const { email } = await emailResponse.json();
-
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/Otp/ValidateOtp`,
+        `/api/validateOtp`,
         {
           method: "POST",
           credentials: "include",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            email,
             otp: otp.join(""),
             date: new Date().toISOString(),
           }),
@@ -71,22 +63,12 @@ export default function OtpInput({ onSubmit }) {
   const handleResend = async () => {
     setResendError("");
     try {
-      const emailRes = await fetch(getEmailEndpoint());
-      if (!emailRes.ok)
-        router.replace("/un/login");
-        
-
-      const { email } = await emailRes.json();
-
       const resendRes = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/otp/resendOtp`,
+        `/api/sendOtp`,
         {
-          method: "POST",
+          method: "GET",
           credentials: "include",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            email,
-          }),
         }
       );
 

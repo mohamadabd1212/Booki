@@ -45,21 +45,21 @@ export async function GET() {
         );
         console.log(apiResponse)
         if (apiResponse.ok) {
-        const data = await apiResponse.json();
-        const token = data.token;
-        // Prepare response with cookies
-        console.log(token)
-        const response = NextResponse.json({ message: "Token Set" }, { status: 200 });
-response.cookies.set("token", token, {
-    httpOnly: true,
-    sameSite: "strict",
-    path: "/",
-    maxAge: 60 * 2, // 2 minutes
-});
-return response;
+            const data = await apiResponse.json();
+            const token = data.token;
+            // Prepare response with cookies
+            console.log(token)
+            const response = NextResponse.json({ message: "Token Set" }, { status: 200 });
+            response.cookies.set("token", token, {
+                httpOnly: true,
+                sameSite: "strict",
+                path: "/",
+                maxAge: 60 * 2, // 2 minutes
+            });
+            return response;
 
-    }
-        else{
+        }
+        else {
             return NextResponse.json({ error: "Token Not Set" }, { status: 400 });
         }
     } catch (error) {
