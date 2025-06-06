@@ -17,6 +17,11 @@
       "static/css/app/page.css",
       "static/chunks/app/page.js"
     ],
+    "/_not-found/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/_not-found/page.js"
+    ],
     "/api/auth/isAuth/route": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
@@ -47,11 +52,6 @@
       "static/chunks/main-app.js",
       "static/chunks/app/api/validateOtp/route.js"
     ],
-    "/_not-found/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/_not-found/page.js"
-    ],
     "/api/forgot-password-validate/route": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
@@ -62,10 +62,10 @@
       "static/chunks/main-app.js",
       "static/chunks/app/un/resetPassword/page.js"
     ],
-    "/un/register/page": [
+    "/api/resetPassword/route": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/un/register/page.js"
+      "static/chunks/app/api/resetPassword/route.js"
     ],
     "/api/login/route": [
       "static/chunks/webpack.js",
@@ -77,25 +77,10 @@
       "static/chunks/main-app.js",
       "static/chunks/app/User/dashboard/page.js"
     ],
-    "/api/auth/getEmail/route": [
+    "/api/auth/logout/route": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/api/auth/getEmail/route.js"
-    ],
-    "/User/VerifyEmail/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/User/VerifyEmail/page.js"
-    ],
-    "/api/sendOtp/route": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/api/sendOtp/route.js"
-    ],
-    "/api/auth/verifyEmail/route": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/api/auth/verifyEmail/route.js"
+      "static/chunks/app/api/auth/logout/route.js"
     ]
   }
 }

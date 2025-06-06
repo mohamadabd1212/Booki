@@ -1,7 +1,11 @@
 {
+  "/api/resetPassword/route": "app/api/resetPassword/route.js",
+  "/api/forgot-password/route": "app/api/forgot-password/route.js",
+  "/api/validateOtp/route": "app/api/validateOtp/route.js",
+  "/api/forgot-password-validate/route": "app/api/forgot-password-validate/route.js",
+  "/un/forgotPassword/page": "app/un/forgotPassword/page.js",
   "/un/otpValidatePassword/page": "app/un/otpValidatePassword/page.js",
-  "/un/register/page": "app/un/register/page.js",
   "/un/login/page": "app/un/login/page.js",
-  "/User/dashboard/page": "app/User/dashboard/page.js",
-  "/User/VerifyEmail/page": "app/User/VerifyEmail/page.js"
+  "/un/resetPassword/page": "app/un/resetPassword/page.js",
+  "/_not-found/page": "app/_not-found/page.js"
 }

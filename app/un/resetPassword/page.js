@@ -27,17 +27,12 @@ export default function ResetPassword() {
       setError("Passwords do not match.");
       return;
     }
-
     try {
-      const result=await fetch("/api/getEmail")
-      if(!result.ok)
-        router.refresh("")
-    const { email,token } = await result.json();
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/change/ResetPassword`, {
+      const res = await fetch(`/api/resetPassword`, {
         method: "POST",
         credentials: "include",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, token, password: newPassword }),
+        body: JSON.stringify({ password: newPassword }),
       });
 
       if (res.ok) {
