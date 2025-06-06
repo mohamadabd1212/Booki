@@ -17,11 +17,6 @@
       "static/css/app/page.css",
       "static/chunks/app/page.js"
     ],
-    "/_not-found/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/_not-found/page.js"
-    ],
     "/api/auth/isAuth/route": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
@@ -32,55 +27,15 @@
       "static/chunks/main-app.js",
       "static/chunks/app/un/login/page.js"
     ],
-    "/un/forgotPassword/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/un/forgotPassword/page.js"
-    ],
-    "/api/forgot-password/route": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/api/forgot-password/route.js"
-    ],
-    "/un/otpValidatePassword/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/un/otpValidatePassword/page.js"
-    ],
-    "/api/validateOtp/route": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/api/validateOtp/route.js"
-    ],
-    "/api/forgot-password-validate/route": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/api/forgot-password-validate/route.js"
-    ],
-    "/un/resetPassword/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/un/resetPassword/page.js"
-    ],
-    "/api/resetPassword/route": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/api/resetPassword/route.js"
-    ],
     "/api/login/route": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/api/login/route.js"
     ],
-    "/User/dashboard/page": [
+    "/Admin/dashboard/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/User/dashboard/page.js"
-    ],
-    "/api/auth/logout/route": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/api/auth/logout/route.js"
+      "static/chunks/app/Admin/dashboard/page.js"
     ]
   }
 }

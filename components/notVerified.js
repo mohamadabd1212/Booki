@@ -38,7 +38,7 @@ export default function NotVerified() {
 
       if (confirmRes.ok) {
         setMessage("Verification email sent successfully.");
-        router.replace("/User/VerifyEmail");
+        router.replace("/VerifyEmail");
       } else {
         const data = await confirmRes.json();
         setMessage(data?.error || "Failed to send verification email.");
