@@ -5,12 +5,6 @@ export async function POST(req) {
   try {
     const body = await req.json();
     const { email, password } = body;
-
-    if (!email || !password) {
-      return NextResponse.json({ error: 'Email and password are required' }, { status: 400 });
-    }
-
-    // Call external login API
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/login`, {
       method: 'POST',
       headers: {
@@ -21,27 +15,23 @@ export async function POST(req) {
 
     if (!res.ok) {
       const errorData = await res.json();
-      return NextResponse.json({ error: errorData.message || 'Login failed' }, { status: res.status });
+      return new NextResponse(JSON.stringify('Error Sending the Request' ), { status: 400 });
     }
 
     const data = await res.json();
     const token = data.token;
 
-    if (!token) {
-      return NextResponse.json({ error: 'Token not received from login API' }, { status: 500 });
-    }
-
-    // Set the JWT as a cookie
     cookies().set('token', token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'strict',
       path: '/',
-      maxAge: 60 * 60 * 24 * 7, // 1 week
+      maxAge: 60 * 60 * 24 * 7, // 1 week,
+      secure:process.env.NODE_ENV==="production"
     });
 
-    return NextResponse.json({ message: 'Logged in and token set in cookie' },{status:200});
+    return new NextResponse(JSON.stringify('Request Sent' ),{status:200});
   } catch (error) {
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    return new NextResponse(JSON.stringify('Internal server error' ), { status: 500 });
   }
 }

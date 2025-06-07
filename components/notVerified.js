@@ -14,25 +14,14 @@ export default function NotVerified() {
     setMessage("");    // Clear any previous messages
 
     try {
-      // Step 1: Get the email from cookie
-      const emailRes = await fetch("/api/auth/getEmail");
-      const { email } = await emailRes.json();
 
-      if (!emailRes.ok || !email) {
-        setMessage("Failed to retrieve your email.");
-        setLoading(false);
-        return;
-      }
-
-      // Step 2: Send verification email
       const confirmRes = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/check/EmailVerfificationRequest`,
+        `/api/auth/VerifyEmailRequest`,
         {
-          method: "POST",
+          method: "GET",
           headers: {
             "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ email }),  // Send email as the body
+          }, // Send email as the body
         }
       );
 

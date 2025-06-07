@@ -1,8 +1,8 @@
 {
-  "/api/auth/isAuth/route": "app/api/auth/isAuth/route.js",
   "/api/login/route": "app/api/login/route.js",
+  "/api/auth/isAuth/route": "app/api/auth/isAuth/route.js",
   "/favicon.ico/route": "app/favicon.ico/route.js",
-  "/page": "app/page.js",
   "/un/login/page": "app/un/login/page.js",
+  "/_not-found/page": "app/_not-found/page.js",
   "/Admin/dashboard/page": "app/Admin/dashboard/page.js"
 }

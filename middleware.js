@@ -3,7 +3,6 @@ import { jwtVerify } from 'jose';
 import { cookies } from 'next/headers';
 
 const JWT_SECRET = process.env.JWT_SECRET;
-
 const ROLE_CLAIM = 'http://schemas.microsoft.com/ws/2008/06/identity/claims/role';
 const VERIFIED_CLAIM = 'http://schemas.xmlsoap.org/ws/2009/09/identity/claims/actor';
 
@@ -17,7 +16,10 @@ async function verifyToken(token) {
 
 function clearCookies(response, cookieNames) {
   cookieNames.forEach(name =>
-    response.cookies.set(name, '', { maxAge: 0 }) // or consider expires: new Date(0)
+    response.cookies.set(name, '', {
+      maxAge: 0,
+      path: '/',
+    })
   );
 }
 
@@ -29,13 +31,12 @@ export async function middleware(req) {
   const pathname = req.nextUrl.pathname;
 
   const tokensPresent = [tokenCookie, otpTokenCookie, resetTokenCookie].filter(Boolean);
-  if (tokensPresent.length > 1) {
-    const response = NextResponse.redirect(new URL('/un/login', req.url));
-    clearCookies(response, ['token', 'otp_token', 'reset']);
-    return response;
-  }
-
   const response = NextResponse.next();
+
+  if (tokensPresent.length > 1) {
+    clearCookies(response, ['token', 'otp_token', 'reset']);
+    return NextResponse.redirect(new URL('/un/login', req.url));
+  }
 
   const isAuthPage = ['/un/login', '/un/register'].some(path => pathname.startsWith(path));
   const isOtpPage = pathname.startsWith('/un/otpValidatePassword');
@@ -67,12 +68,13 @@ export async function middleware(req) {
     return response;
   }
 
-  // Auth pages clear otp/reset tokens and redirect logged-in users to dashboard
+  // Auth pages
   if (isAuthPage) {
     clearCookies(response, ['otp_token', 'reset']);
+
     if (tokenCookie) {
       const decoded = await verifyOrClear(tokenCookie);
-      if (!decoded) return NextResponse.redirect(new URL('/un/login', req.url));
+      if (!decoded) return response; // ✅ Just stay on login page after clearing
 
       const roles = decoded.payload[ROLE_CLAIM] || [];
       const role = Array.isArray(roles) ? roles[0] : roles;
@@ -81,7 +83,7 @@ export async function middleware(req) {
     return response;
   }
 
-  // Protected pages require valid token
+  // Protected pages
   if (isProtectedPage) {
     const decoded = await verifyOrClear(tokenCookie);
     if (!decoded) return NextResponse.redirect(new URL('/un/login', req.url));
@@ -89,7 +91,6 @@ export async function middleware(req) {
     const roles = decoded.payload[ROLE_CLAIM] || [];
     const role = Array.isArray(roles) ? roles[0] : roles;
 
-    // Confirm Email page handling
     if (isConfirmEmailPage) {
       const isVerified = decoded.payload[VERIFIED_CLAIM];
       if (isVerified === 'True') {
@@ -98,15 +99,16 @@ export async function middleware(req) {
       return response;
     }
 
-    // Role-based access control
-    if ((pathname.startsWith('/Admin') && role !== 'Admin') ||
-        (pathname.startsWith('/User') && role !== 'User')) {
+    // Role-based restriction
+    if (
+      (pathname.startsWith('/Admin') && role !== 'Admin') ||
+      (pathname.startsWith('/User') && role !== 'User')
+    ) {
       return NextResponse.redirect(new URL(`/${role}/dashboard`, req.url));
     }
 
     return response;
   }
 
-  // Default fallback: allow
   return response;
 }
