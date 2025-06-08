@@ -24,7 +24,7 @@ export default function Login() {
     setLoading(true);
 
     try {
-      const response = await fetch(`/api/login`, {
+      const response = await fetch(`/api/un/login`, {
         method: "POST",
         credentials: "include",
         headers: {
@@ -33,15 +33,13 @@ export default function Login() {
         body: JSON.stringify({ email, password }),
       });
 
-      const data = await response.json();
-
       if (response.ok) {
-        router.push('/User/dashboard');
-        await setUserContext({});
-    }
-       else {
-        setResponseMessage(data.message || "Invalid email or password.");
-      }
+  router.push('/User/dashboard');
+  await setUserContext({});
+} else {
+  const data = await response.json();
+  setResponseMessage(data.message || "Login failed"); // <- FIXED
+}
     } catch (error) {
       setResponseMessage("An error occurred. Please try again.");
     } finally {

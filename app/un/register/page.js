@@ -32,7 +32,7 @@ export default function Register() {
   
     // Proceed with the API request if validation is successful
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/register`, {
+      const response = await fetch(`/api/un/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -49,8 +49,6 @@ export default function Register() {
       if (response.ok) {
         // Handle successful registration
         router.replace("/un/login")
-        // Redirect to login page (or perform any other actions)
-        router
       } else {
         // Handle error response from the server
         setError(data.message || "An error occurred. Please try again.");

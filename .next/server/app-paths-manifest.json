@@ -1,8 +1,10 @@
 {
-  "/api/login/route": "app/api/login/route.js",
   "/api/auth/isAuth/route": "app/api/auth/isAuth/route.js",
   "/favicon.ico/route": "app/favicon.ico/route.js",
+  "/api/un/login/route": "app/api/un/login/route.js",
+  "/api/auth/logout/route": "app/api/auth/logout/route.js",
   "/un/login/page": "app/un/login/page.js",
   "/_not-found/page": "app/_not-found/page.js",
-  "/Admin/dashboard/page": "app/Admin/dashboard/page.js"
+  "/page": "app/page.js",
+  "/User/dashboard/page": "app/User/dashboard/page.js"
 }

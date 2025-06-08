@@ -12,7 +12,7 @@ export default function ValidateOtBeforePassword() {
     try {
       setLoading(true);
 
-        const response =await fetch('/api/forgot-password-validate', {
+        const response =await fetch('/api/password/forgot-password-validate', {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',

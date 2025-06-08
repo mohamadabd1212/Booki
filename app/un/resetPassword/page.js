@@ -14,12 +14,9 @@ export default function ResetPassword() {
   const router = useRouter();
   
 
-  
-
   const handleSubmit = async () => {
     event.preventDefault();
     
-
     setError("");
     setSuccess("");
 
@@ -28,7 +25,7 @@ export default function ResetPassword() {
       return;
     }
     try {
-      const res = await fetch(`/api/resetPassword`, {
+      const res = await fetch(`/api/password/resetPassword`, {
         method: "POST",
         credentials: "include",
         headers: { "Content-Type": "application/json" },
@@ -95,7 +92,7 @@ export default function ResetPassword() {
                 </form>
 
                 <p className="text-center mt-3">
-                  <Link href="/auth/login" className="text-primary">Back to Login</Link>
+                  <Link href="/un/login" className="text-primary">Back to Login</Link>
                 </p>
               </div>
             </div>

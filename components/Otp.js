@@ -10,8 +10,6 @@ export default function OtpInput({ onSubmit }) {
   const [error, setError] = useState("");
   const [resendError, setResendError] = useState("");
 
-  const pathname = usePathname();
-  const router = useRouter();
 
 
   const handleChange = (element, index) => {
@@ -35,7 +33,7 @@ export default function OtpInput({ onSubmit }) {
       setLoading(true);
 
       const response = await fetch(
-        `/api/validateOtp`,
+        `/api/otp/validateOtp`,
         {
           method: "POST",
           credentials: "include",
@@ -51,7 +49,7 @@ export default function OtpInput({ onSubmit }) {
         await onSubmit();
       } else {
         const result = await response.json();
-        setError(result.message || "Invalid OTP");
+       setError(result.message || JSON.stringify(result));
       }
     } catch (err) {
       setError(err.message || "Unexpected error");
@@ -64,7 +62,7 @@ export default function OtpInput({ onSubmit }) {
     setResendError("");
     try {
       const resendRes = await fetch(
-        `/api/sendOtp`,
+        `/api/otp/sendOtp`,
         {
           method: "GET",
           credentials: "include",
@@ -74,7 +72,7 @@ export default function OtpInput({ onSubmit }) {
 
       if (!resendRes.ok) {
         const result = await resendRes.json();
-        throw new Error(result.message || "Failed to resend OTP");
+        throw new Error(result );
       }
 
       alert("OTP has been resent to your email.");

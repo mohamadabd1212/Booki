@@ -24,11 +24,13 @@ function clearCookies(response, cookieNames) {
 }
 
 export async function middleware(req) {
+  const pathname = req.nextUrl.pathname;
   const cookieStore = await cookies();
+  const referer = req.headers.get('referer');
   const tokenCookie = cookieStore.get('token');
   const otpTokenCookie = cookieStore.get('otp_token');
   const resetTokenCookie = cookieStore.get('reset');
-  const pathname = req.nextUrl.pathname;
+  
 
   const tokensPresent = [tokenCookie, otpTokenCookie, resetTokenCookie].filter(Boolean);
   const response = NextResponse.next();
