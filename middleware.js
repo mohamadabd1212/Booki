@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { jwtVerify } from 'jose';
 import { cookies } from 'next/headers';
+import { ref } from 'process';
 
 const JWT_SECRET = process.env.JWT_SECRET;
 const ROLE_CLAIM = 'http://schemas.microsoft.com/ws/2008/06/identity/claims/role';
@@ -26,11 +27,9 @@ function clearCookies(response, cookieNames) {
 export async function middleware(req) {
   const pathname = req.nextUrl.pathname;
   const cookieStore = await cookies();
-  const referer = req.headers.get('referer');
   const tokenCookie = cookieStore.get('token');
   const otpTokenCookie = cookieStore.get('otp_token');
   const resetTokenCookie = cookieStore.get('reset');
-  
 
   const tokensPresent = [tokenCookie, otpTokenCookie, resetTokenCookie].filter(Boolean);
   const response = NextResponse.next();
@@ -40,8 +39,8 @@ export async function middleware(req) {
     return NextResponse.redirect(new URL('/un/login', req.url));
   }
 
-  const isAuthPage = ['/un/login', '/un/register'].some(path => pathname.startsWith(path));
-  const isOtpPage = pathname.startsWith('/un/otpValidatePassword');
+  const isAuthPage = ['/un/login', '/un/register','/un/forgotPassword'].some(path => pathname.startsWith(path));
+  const isOtpPage = pathname.startsWith('/un/otpValidatePassword'  );
   const isResetPage = pathname.startsWith('/un/resetPassword');
   const isConfirmEmailPage = pathname.startsWith('/User/VerifyEmail');
   const isProtectedPage = pathname.startsWith('/User') || pathname.startsWith('/Admin');
